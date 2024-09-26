@@ -3,7 +3,6 @@ import 'dotenv/config'
 import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import productRouter from './routes/product.js';
 import artRouter from './routes/art.js';
 const server = express();
 
@@ -21,7 +20,6 @@ async function main() {
 //bodyParser
 server.use(express.json());
 server.use(morgan('default'));
-server.use('/products',productRouter);
 server.use('/api/v1/arts',artRouter);
 
 server.listen(process.env.PORT, () => {

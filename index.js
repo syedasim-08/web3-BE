@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import artRouter from './routes/art.js';
+import fileUploadRouter from './routes/upload-file.js';
 const server = express();
 
 console.log('env',process.env.MONGODB_URI)
@@ -21,6 +22,7 @@ async function main() {
 server.use(express.json());
 server.use(morgan('default'));
 server.use('/api/v1/arts',artRouter);
+server.use('/api/v1/file-upload',fileUploadRouter);
 
 server.listen(process.env.PORT, () => {
   console.log('server started');

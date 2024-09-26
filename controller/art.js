@@ -1,7 +1,7 @@
 import ArtModel from "../modal/artModal.js";
 
 export const createArt = async(req,res) => {
-  console.log(req.body);
+
 
   try{
     const art = new ArtModel(req.body)
@@ -9,9 +9,8 @@ export const createArt = async(req,res) => {
     const { name, minting, price, imgUrl } = art;
     // Validate the data
     if (!name || !minting || !price || !imgUrl) {
-      return res.json(
+      return res.status(400).json(
         { error: "All fields are required" },
-        { status: 400 }
       );
     }
 

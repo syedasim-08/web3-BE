@@ -30,6 +30,10 @@ export const createArt = async(req,res) => {
 };
 
 export const getAllArts = async (req, res) => {
+ let method= req.method
+ let url= req.url
+let   origin=req.headers.origin
+console.log(method,url,origin)
     const art = await ArtModel.find();
   res.json(art);
 };

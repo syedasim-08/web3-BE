@@ -19,7 +19,10 @@ async function main() {
 }
 
 console.log('Allowed Origin:', process.env.FRONTEND_URL);
-
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  next();
+});
 
 // Define allowed origins
 const allowedOrigins = [

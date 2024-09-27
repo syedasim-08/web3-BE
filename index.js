@@ -30,6 +30,7 @@ const allowedOrigins = [
 // CORS options
 const corsOptions = {
     origin: (origin, callback) => {
+      console.log('Incoming Origin:', origin); // Log the incoming origin
         // Allow requests with no origin (like Postman)
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);

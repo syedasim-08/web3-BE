@@ -18,17 +18,19 @@ async function main() {
   console.log('database connected')
 }
 
+console.log('Allowed Origin:', process.env.FRONTEND_URL);
 
 
 // Define allowed origins
 const allowedOrigins = [
-    process.env.FRONTEND_URL
-    
+    process.env.FRONTEND_URL,
+    "https://openocean-nft.vercel.app/art"
 ];
 
 // CORS options
 const corsOptions = {
     origin: (origin, callback) => {
+      console.log('Incoming Origin:', origin); // Log the incoming origin
         // Allow requests with no origin (like Postman)
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);

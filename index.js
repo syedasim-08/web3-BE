@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import artRouter from './routes/art.js';
 import fileUploadRouter from './routes/upload-file.js';
+import cors from 'cors'
 const server = express();
 
 console.log('env',process.env.MONGODB_URI)
@@ -16,6 +17,32 @@ async function main() {
   await mongoose.connect(process.env.MONGODB_URI);
   console.log('database connected')
 }
+
+
+
+// Define allowed origins
+const allowedOrigins = [
+    process.env.FRONTEND_URL
+    
+];
+
+// CORS options
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like Postman)
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST'], // Specify allowed methods
+    allowedHeaders: ['Content-Type'], // Specify allowed headers
+  
+};
+
+// Use CORS middleware with the specified options
+server.use(cors(corsOptions));
 
 
 //bodyParser

@@ -19,30 +19,14 @@ async function main() {
 }
 
 console.log('Allowed Origin:', process.env.FRONTEND_URL);
-server.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Or specific origin
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.sendStatus(204);
-});
 
-// Define allowed origins
 const allowedOrigins = [
     process.env.FRONTEND_URL,
-    "https://openocean-nft.vercel.app/art"
+    "https://openocean-nft.vercel.app"
 ];
 
 const corsOptions = {
-  origin: (origin, callback) => {
-      console.log('Incoming Origin:', origin);
-      if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-      } else {
-          callback(new Error('Not allowed by CORS'));
-      }
-  },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  origin: allowedOrigins,
 };
 
 server.use(cors(corsOptions));

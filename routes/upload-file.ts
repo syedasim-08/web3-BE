@@ -3,7 +3,7 @@ import multer from 'multer';
 
 import {
   UploadFile,
-} from "../controller/file-upload.js";
+} from "../controller/file-upload";
 
 const router =Router();
 

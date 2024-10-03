@@ -1,4 +1,5 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Request, Response,RequestHandler } from "express";
 
 const region = process.env.AWS_S3_REGION;
 const accessKeyId = process.env.ACCESS_KEY_ID;
@@ -17,7 +18,7 @@ const s3Client = new S3Client({
   },
 });
 
-async function uploadFileToS3(file, fileName) {
+async function uploadFileToS3(file : Buffer, fileName:string) {
   const fileBuffer = file;
 
   const params = {
@@ -64,14 +65,15 @@ async function uploadFileToS3(file, fileName) {
 //   }
   
 
-export const UploadFile =async (request, response) => {
+export const UploadFile: RequestHandler =async (request, response) => {
     try {
       const file = request.file; // Access the uploaded file
-      console.log("file", file);
+  
   
       // Validate file entry
       if (!file) {
-        return response.status(400).json({ error: "File is required" });
+      response.status(400).json({ error: "File is required" });
+      return 
       }
   
       // Get the buffer from the file
@@ -80,9 +82,9 @@ export const UploadFile =async (request, response) => {
       // Upload the file to S3
       const fileName = await uploadFileToS3(buffer, file.originalname);
   
-      return response.json({ success: true, fileName });
+       response.json({ success: true, fileName });
     } catch (error) {
       console.error("Upload Error:", error);
-      return response.status(500).json({ error: "Error uploading file" });
+       response.status(500).json({ error: "Error uploading file" });
     }
   };
